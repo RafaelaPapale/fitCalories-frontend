@@ -64,15 +64,73 @@ export default function Dashboard() {
           borderColor: '#ba0041',
         },
       },
-    }
+    },
+    boxPage: {
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'row',
+      m: 0,
+      p: 0,
+    },
+    boxHeader: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    container: {
+      width: '100%',
+      height: '100%',
+      p: '24px',
+    },
+    boxHeaderLeft: {
+      display: 'flex',
+      flexDirection: 'row',
+    },
+    buttonAlterar: {
+      backgroundColor: '#ba0041',
+      color: 'white',
+      borderRadius: '10px',
+      width: '120px',
+      height: '56px',
+      ml: '24px',
+      '&:hover': {
+        backgroundColor: '#9c0036',
+      }
+    },
+    boxButtonNew: {
+      display: 'flex',
+      justifyContent: 'end',
+      pt: '24px',
+    },
+    buttonNew: {
+      backgroundColor: '#ba0041',
+      color: 'white',
+      borderRadius: '10px',
+      width: '350px',
+      height: '56px',
+      ml: '24px',
+      '&:hover': {
+        backgroundColor: '#9c0036',
+      }
+    },
+    boxTable: {
+      pt: '24px',
+    },
+    tableContainer: {
+      borderRadius: '10px',
+    },
+    table: {
+      minWidth: 700,
+    },
   }
   return (
-    <Box sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'row', m: 0, p: 0 }}>
+    <Box sx={styles.boxPage}>
       <Sidebar />
-      <Box sx={{ width: '100%', height: '100%', p: '24px' }}>
-        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-            <TextField id="outlined-basic"
+      <Box sx={styles.container}>
+        <Box sx={styles.boxHeader}>
+          <Box sx={styles.boxHeaderLeft}>
+            <TextField
               label="Meta diária"
               variant="outlined"
               disableRipple
@@ -81,20 +139,10 @@ export default function Dashboard() {
                 endAdornment: <InputAdornment position="end">calorias</InputAdornment>,
               }}
             />
-            <Button disableRipple sx={{
-              backgroundColor: '#ba0041',
-              color: 'white',
-              borderRadius: '10px',
-              width: '120px',
-              height: '56px',
-              ml: '24px',
-              '&:hover': {
-                backgroundColor: '#9c0036',
-              }
-            }}>Alterar</Button>
+            <Button disableRipple sx={styles.buttonAlterar}>Alterar</Button>
           </Box>
           <Box>
-            <TextField id="outlined-basic"
+            <TextField
               label="Total consumido"
               variant="outlined"
               disableRipple
@@ -105,22 +153,12 @@ export default function Dashboard() {
             />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'end', pt: '24px' }}>
-          <Button disableRipple sx={{
-            backgroundColor: '#ba0041',
-            color: 'white',
-            borderRadius: '10px',
-            width: '350px',
-            height: '56px',
-            ml: '24px',
-            '&:hover': {
-              backgroundColor: '#9c0036',
-            }
-          }}>Novo consumo</Button>
+        <Box sx={styles.boxButtonNew}>
+          <Button disableRipple sx={styles.buttonNew}>Novo consumo</Button>
         </Box>
-        <Box sx={{ pt: '24px' }}>
-          <TableContainer component={Paper} sx={{ borderRadius: '10px' }}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <Box sx={styles.boxTable}>
+          <TableContainer component={Paper} sx={styles.tableContainer}>
+            <Table sx={styles.table} aria-label="customized table">
               <TableHead>
                 <TableRow>
                   <StyledTableCell align="center">Dessert (100g serving)</StyledTableCell>
