@@ -2,7 +2,6 @@ import frutas from '../../assets/images/frutas.jpg';
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -10,9 +9,9 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import AddIcon from '@mui/icons-material/Add';
+
 
 function Copyright(props) {
     return (
@@ -52,13 +51,50 @@ export default function SignInSide() {
 
         },
 
+        boxButtonNew: {
+            mt: 3,
+            mb: 2,
+            backgroundColor: '#ff7300',
+            borderRadius: '10px',
+
+        },
+
+        boxButtonCreate: {
+
+            mt: 3,
+            mb: 2,
+            backgroundColor: "White",
+            borderRadius: '10px',
+            color:'#ff7300',
+
+        },
+
+        boxCreate: {
+
+           display: 'flex',
+           flexDirection: 'column',
+           p: '30px',
+           justifyContent: 'center',
+           alignItems: 'center',
+
+        },
+
+        boxTypographyCreate: {
+         color: '#ffd000',
+         fontSize: '20px',
+         alignItems: 'center',
+         justifyContent: 'center',
+ 
+         },
+
+        
         listItemButton: {
             backgroundColor: '#b03b00',
             height: '55px',
             '&:hover, &:selected, &:focused': {
-              backgroundColor: '#de6021',
+                backgroundColor: '#de6021',
             }
-          },
+        },
     }
 
 
@@ -91,12 +127,12 @@ export default function SignInSide() {
 
 
                     &nbsp;
-                    
+
                     <Typography component="h2" variant="h6" color='#ffd000'>
                         Olá! Insira suas credenciais para continuar
                     </Typography>
 
-  
+
                     &nbsp;
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                         <TextField
@@ -123,27 +159,29 @@ export default function SignInSide() {
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
                         />
-                        <Button 
+                        <Button
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 ,  backgroundColor: '#ff7300' }}
+                            sx={styles.boxButtonNew}
                         >
                             Entrar
                         </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Esqueceu a senha?
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link href="#" variant="body2">
-                                    {"Não tem conta? Cadastre-se"}
-                                </Link>
-                            </Grid>
-                        </Grid>
 
+                        <Box sx={styles.boxCreate }>
+                            <Typography sx={styles.boxTypographyCreate} >
+                                Não possui uma conta?
+                            </Typography>
+
+                            <Button
+                                startIcon={<AddIcon />}
+                                sx={styles.boxButtonCreate}
+                                disableRipple
+
+                            >
+                                Criar
+                            </Button>
+                        </Box>
                     </Box>
                 </Box>
             </Grid>
