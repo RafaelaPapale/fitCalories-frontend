@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -9,9 +11,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Button } from '@mui/material';
 
 import Sidebar from '../../components/Sidebar';
-import { Button } from '@mui/material';
+import ModalCreate from '../../components/ModalCreate';
+import { Context } from '../../contexts';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,6 +50,10 @@ const rows = [
 ];
 
 export default function Dashboard() {
+  const {
+    setOpenModalCreate,
+  } = useContext(Context);
+
   const styles = {
     txtField: {
       width: '350px',
@@ -124,9 +132,11 @@ export default function Dashboard() {
       minWidth: 700,
     },
   }
+
   return (
     <Box sx={styles.boxPage}>
       <Sidebar />
+      <ModalCreate />
       <Box sx={styles.container}>
         <Box sx={styles.boxHeader}>
           <Box sx={styles.boxHeaderLeft}>
@@ -153,7 +163,7 @@ export default function Dashboard() {
             />
           </Box>
         </Box>
-        <Box sx={styles.boxButtonNew}>
+        <Box sx={styles.boxButtonNew} onClick={() => setOpenModalCreate(true)}>
           <Button disableRipple sx={styles.buttonNew}>Novo consumo</Button>
         </Box>
         <Box sx={styles.boxTable}>
@@ -163,9 +173,9 @@ export default function Dashboard() {
                 <TableRow>
                   <StyledTableCell align="center">Dessert (100g serving)</StyledTableCell>
                   <StyledTableCell align="center">Calories</StyledTableCell>
-                  <StyledTableCell align="center">Fat&nbsp;(g)</StyledTableCell>
-                  <StyledTableCell align="center">Carbs&nbsp;(g)</StyledTableCell>
-                  <StyledTableCell align="center">Protein&nbsp;(g)</StyledTableCell>
+                  <StyledTableCell align="center">Fat(g)</StyledTableCell>
+                  <StyledTableCell align="center">Carbs(g)</StyledTableCell>
+                  <StyledTableCell align="center">Protein(g)</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -184,6 +194,7 @@ export default function Dashboard() {
             </Table>
           </TableContainer>
         </Box>
+
       </Box>
     </Box>
   )

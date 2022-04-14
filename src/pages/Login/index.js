@@ -1,93 +1,58 @@
 import frutas from '../../assets/images/frutas.jpg';
-import * as React from 'react';
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 
-
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
-
-
-export default function SignInSide() {
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
+export default function Login() {
 
     const styles = {
         avatarAberto: {
-            width: '650px',
-            height: '655px',
+            width: '60%',
+            height: '100%',
         },
-
         boxPrincipal: {
             display: 'flex',
             flexDirection: 'row',
-
+            width: '100%',
+            height: '100%',
         },
-
         boxButtonNew: {
-            mt: 3,
-            mb: 2,
+            mt: '20px',
+            mb: '20px',
             backgroundColor: '#ff7300',
             borderRadius: '10px',
-
+            color: 'white',
+            '&:hover': {
+                backgroundColor: '#de6021',
+            }
         },
-
         boxButtonCreate: {
-
             mt: 3,
-            mb: 2,
             backgroundColor: "White",
             borderRadius: '10px',
-            color:'#ff7300',
-
+            color: '#ff7300',
         },
-
         boxCreate: {
-
-           display: 'flex',
-           flexDirection: 'column',
-           p: '30px',
-           justifyContent: 'center',
-           alignItems: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            m: '30px',
+            justifyContent: 'center',
+            alignItems: 'center',
 
         },
-
         boxTypographyCreate: {
-         color: '#ffd000',
-         fontSize: '20px',
-         alignItems: 'center',
-         justifyContent: 'center',
- 
-         },
+            color: '#ffd000',
+            fontSize: '20px',
+            alignItems: 'center',
+            justifyContent: 'center',
 
-        
+        },
         listItemButton: {
             backgroundColor: '#b03b00',
             height: '55px',
@@ -95,96 +60,86 @@ export default function SignInSide() {
                 backgroundColor: '#de6021',
             }
         },
-    }
-
-
+        txtField: {
+            mb: '30px',
+            backgroundColor: 'white !important',
+            color: 'white !important',
+            '& label.Mui-focused': {
+                color: '#ba0041',
+                backgroundColor: 'transparent !important',
+            },
+            '& .MuiOutlinedInput-root': {
+                borderRadius: '10px',
+                backgroundColor: 'white !important',
+                '&.Mui-focused fieldset': {
+                    backgroundColor: 'transparent !important',
+                    borderRadius: '10px',
+                    borderColor: '#ba0041',
+                },
+            },
+        },
+    };
 
     return (
-
         <Box sx={styles.boxPrincipal}>
-
-
             <Avatar variant="square"
-                alt="Remy Sharp"
                 src={frutas}
                 sx={styles.avatarAberto}
             />
-
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <Box sx={{ width: '100%', height: '100%' }}>
                 <Box
                     sx={{
-                        my: 8,
-                        mx: 4,
+                        p: '24px',
                         display: 'flex',
                         flexDirection: 'column',
-                        alignItems: 'center',
+                        width: '100%',
+                        height: '100%',
+                        justifyContent: 'center'
                     }}
                 >
+                    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', mb: '50px' }}>
+                        <Typography sx={{ color: '#ff7300', fontWeight: 'bold', fontSize: '60px', mt: '20px' }}>
+                            Fit Calories
+                        </Typography>
+                        <Typography sx={{ color: '#ffd000', fontSize: '20px', mt: '20px' }}>
+                            Olá! Insira suas credenciais para continuar
+                        </Typography>
+                    </Box>
 
-                    <Typography component="h1" variant="h3" color='#ff7300'>
-                        Fit Calories
-                    </Typography>
+                    <TextField
+                        required
+                        fullWidth
+                        variant="outlined"
+                        label="Email"
+                        disableRipple
+                        sx={styles.txtField}
+                    />
+                    <TextField
+                        required
+                        fullWidth
+                        variant="outlined"
+                        label="Senha"
+                        disableRipple
+                        sx={styles.txtField}
+                    />
+                    <FormControlLabel
+                        control={<Checkbox value="remember" color="primary" />}
+                        label="Lembrar minhas credenciais"
+                    />
+                    <Button fullWidth disableRipple sx={styles.boxButtonNew}>
+                        Entrar
+                    </Button>
 
-
-                    &nbsp;
-
-                    <Typography component="h2" variant="h6" color='#ffd000'>
-                        Olá! Insira suas credenciais para continuar
-                    </Typography>
-
-
-                    &nbsp;
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="senha"
-                            label="Senha"
-                            type="senha"
-                            id="senha"
-                            autoComplete="current-senha"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={styles.boxButtonNew}
-                        >
-                            Entrar
+                    <Box sx={styles.boxCreate}>
+                        <Typography sx={styles.boxTypographyCreate} >
+                            Não possui uma conta?
+                        </Typography>
+                        <Button startIcon={<AddIcon />} sx={styles.boxButtonCreate} disableRipple>
+                            Criar
                         </Button>
-
-                        <Box sx={styles.boxCreate }>
-                            <Typography sx={styles.boxTypographyCreate} >
-                                Não possui uma conta?
-                            </Typography>
-
-                            <Button
-                                startIcon={<AddIcon />}
-                                sx={styles.boxButtonCreate}
-                                disableRipple
-
-                            >
-                                Criar
-                            </Button>
-                        </Box>
                     </Box>
                 </Box>
-            </Grid>
+            </Box>
         </Box>
 
     );
