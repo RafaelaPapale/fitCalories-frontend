@@ -4,17 +4,11 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
-
 import Sidebar from '../../components/Sidebar';
-import ModalCreate from '../../components/ModalCreate';
+import ModalUsuario from '../../components/ModalUsuario';
 import { Context } from '../../contexts';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -37,23 +31,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
 export default function Usuario() {
     const {
-        setOpenModalCreate,
-    } = useContext(Context);
-
+        setOpenModalUsuario,
+      } = useContext(Context);
+      
     const styles = {
         txtField: {
             width: '700px',
@@ -162,7 +145,7 @@ export default function Usuario() {
     return (
         <Box sx={styles.boxPage}>
             <Sidebar />
-            <ModalCreate />
+            <ModalUsuario />
             <Box sx={styles.container}>
 
                 <Box sx={styles.boxTable}>
@@ -174,8 +157,6 @@ export default function Usuario() {
                         disableRipple
                         sx={styles.txtField}
                     />
-
-
 
                 </Box>
 
@@ -190,7 +171,6 @@ export default function Usuario() {
                         sx={styles.txtField}
                     />
 
-
                 </Box>
 
                 <Box sx={styles.boxTable}>
@@ -204,7 +184,6 @@ export default function Usuario() {
                         sx={styles.txtField}
                     />
 
-
                 </Box>
 
                 <Box sx={styles.boxTable}>
@@ -217,10 +196,7 @@ export default function Usuario() {
                         disableRipple
                         sx={styles.txtField}
                     />
-
-
                 </Box>
-
 
                 <Box sx={styles.boxTable}>
 
@@ -263,7 +239,7 @@ export default function Usuario() {
 
                     />
 
-                    <Button disableRipple sx={styles.buttonInfo}>Vizualizar Informacoes</Button>
+                    <Button disableRipple sx={styles.buttonInfo} onClick={() => setOpenModalUsuario(true)}>Vizualizar Informacoes</Button> 
 
 
                 </Box>
