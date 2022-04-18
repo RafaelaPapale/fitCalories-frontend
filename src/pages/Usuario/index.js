@@ -1,36 +1,13 @@
 import { useContext } from 'react';
 
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
 import { Button } from '@mui/material';
+
 import Sidebar from '../../components/Sidebar';
 import ModalUsuario from '../../components/ModalUsuario';
 import { Context } from '../../contexts';
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: '#ffd000',
-        color: 'black',
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
-    },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
-}));
-
 
 export default function Usuario() {
     const {
@@ -56,8 +33,6 @@ export default function Usuario() {
                 },
             },
         },
-
-
         txtField2: {
             width: '338px',
             backgroundColor: 'white !important',
@@ -76,7 +51,6 @@ export default function Usuario() {
                 },
             },
         },
-
         txtFieldPeso: {
             width: '338px',
             ml: '24px',
@@ -96,7 +70,6 @@ export default function Usuario() {
                 },
             },
         },
-
         boxPage: {
             width: '100%',
             height: '100%',
@@ -105,13 +78,11 @@ export default function Usuario() {
             m: 0,
             p: 0,
         },
-
         container: {
             width: '100%',
             height: '100%',
             p: '24px',
         },
-
         buttonInfo: {
             backgroundColor: '#ba0041',
             color: 'white',
@@ -135,11 +106,9 @@ export default function Usuario() {
                 backgroundColor: '#de6021',
             }
         },
-
-        boxTable: {
+        box: {
             pt: '24px',
         },
-
     }
 
     return (
@@ -148,7 +117,7 @@ export default function Usuario() {
             <ModalUsuario />
             <Box sx={styles.container}>
 
-                <Box sx={styles.boxTable}>
+                <Box sx={styles.box}>
                     <TextField
                         required
                         fullWidth
@@ -156,12 +125,11 @@ export default function Usuario() {
                         label="Email"
                         disableRipple
                         sx={styles.txtField}
+                        disabled
                     />
-
                 </Box>
 
-                <Box sx={styles.boxTable}>
-
+                <Box sx={styles.box}>
                     <TextField
                         required
                         fullWidth
@@ -173,8 +141,7 @@ export default function Usuario() {
 
                 </Box>
 
-                <Box sx={styles.boxTable}>
-
+                <Box sx={styles.box}>
                     <TextField
                         required
                         fullWidth
@@ -186,8 +153,7 @@ export default function Usuario() {
 
                 </Box>
 
-                <Box sx={styles.boxTable}>
-
+                <Box sx={styles.box}>
                     <TextField
                         required
                         fullWidth
@@ -198,8 +164,7 @@ export default function Usuario() {
                     />
                 </Box>
 
-                <Box sx={styles.boxTable}>
-
+                <Box sx={styles.box}>
                     <TextField
                         required
                         fullWidth
@@ -212,7 +177,6 @@ export default function Usuario() {
                         }}
 
                     />
-
                     <TextField
                         required
                         fullWidth
@@ -227,8 +191,7 @@ export default function Usuario() {
                 </Box>
 
 
-                <Box sx={styles.boxTable}>
-
+                <Box sx={styles.box}>
                     <TextField
                         required
                         fullWidth
@@ -238,10 +201,9 @@ export default function Usuario() {
                         sx={styles.txtField2}
 
                     />
-
-                    <Button disableRipple sx={styles.buttonInfo} onClick={() => setOpenModalUsuario(true)}>Vizualizar Informacoes</Button> 
-
-
+                    <Button disableRipple sx={styles.buttonInfo} onClick={() => setOpenModalUsuario(true)}>
+                        Vizualizar Informacoes
+                    </Button> 
                 </Box>
 
                 <Button fullWidth disableRipple sx={styles.boxButtonRegister}>

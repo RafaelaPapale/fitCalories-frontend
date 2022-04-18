@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
 import Box from '@mui/material/Box';
-import { Button, Modal } from '@mui/material';
+import { Modal } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { TextField } from '@mui/material';
@@ -19,7 +19,6 @@ export default function ModalUsuario() {
 
     const styles = {
         boxModal: {
-
             position: 'absolute',
             top: '50%',
             left: '50%',
@@ -31,29 +30,23 @@ export default function ModalUsuario() {
             width: '850px',
             height: '500px',
         },
-
         avatarAberto: {
             width: '72%',
             height: '50%',
             ml: '110px',
             pt: '25px',
         },
-
         boxTable: {
             pt: '24px',
         },
-
         boxPrincipal: {
             display: 'flex',
             flexDirection: 'column',
             width: '100%',
             height: '100%',
         },
-
-
-
         txtField: {
-            width: '755px',
+            width: '100%',
             mb: '30px',
             backgroundColor: 'white !important',
             color: 'white !important',
@@ -71,11 +64,10 @@ export default function ModalUsuario() {
                 },
             },
         },
-
-
         txtFieldAtual: {
-            width: '365px',
+            width: '50%',
             backgroundColor: 'white !important',
+            mr: '12px',
             color: 'white !important',
             '& label.Mui-focused': {
                 color: '#ba0041',
@@ -91,12 +83,11 @@ export default function ModalUsuario() {
                 },
             },
         },
-
         txtFieldSugerido: {
-            width: '365px',
-            ml: '24px',
+            width: '50%',
             backgroundColor: 'white !important',
             color: 'white !important',
+            ml: '12px',
             '& label.Mui-focused': {
                 color: '#ba0041',
                 backgroundColor: 'transparent !important',
@@ -111,7 +102,6 @@ export default function ModalUsuario() {
                 },
             },
         },
-
         boxIconButton: {
             display: 'flex',
             justifyContent: 'start',
@@ -157,11 +147,9 @@ export default function ModalUsuario() {
                         disableRipple
                         sx={styles.txtField}
                     />
-                    <Box >
-
+                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                         <TextField
                             required
-                            fullWidth
                             variant="outlined"
                             label="Peso Atual"
                             disableRipple
@@ -169,13 +157,9 @@ export default function ModalUsuario() {
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">kg</InputAdornment>,
                             }}
-
-
                         />
-
                         <TextField
                             required
-                            fullWidth
                             variant="outlined"
                             label="Peso Sugerido"
                             disableRipple
@@ -183,16 +167,12 @@ export default function ModalUsuario() {
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">kg</InputAdornment>,
                             }}
-
                         />
                     </Box>
-
                     <Avatar variant="square"
                         src={tabela}
                         sx={styles.avatarAberto}
-
                     />
-
                 </Box>
             </Box>
         </Modal>

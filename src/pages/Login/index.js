@@ -1,4 +1,6 @@
-import frutas from '../../assets/images/frutas.jpg';
+import { useNavigate } from 'react-router-dom';
+
+import alimentos from '../../assets/images/alimentos.png';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -10,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 
 export default function Login() {
+    const navigate = useNavigate();
 
     const styles = {
         avatarAberto: {
@@ -80,10 +83,18 @@ export default function Login() {
         },
     };
 
+    const handleClickCreate = (e) => {
+        navigate(`/create`);
+    };
+
+    const handleClickEntrar = (e) => {
+        navigate(`/dashboard`);
+    };
+
     return (
         <Box sx={styles.boxPrincipal}>
             <Avatar variant="square"
-                src={frutas}
+                src={alimentos}
                 sx={styles.avatarAberto}
             />
             <Box sx={{ width: '100%', height: '100%' }}>
@@ -126,7 +137,12 @@ export default function Login() {
                         control={<Checkbox value="remember" color="primary" />}
                         label="Lembrar minhas credenciais"
                     />
-                    <Button fullWidth disableRipple sx={styles.boxButtonNew}>
+                    <Button
+                        fullWidth
+                        disableRipple
+                        sx={styles.boxButtonNew}
+                        onClick={(e) => handleClickEntrar(e)}
+                    >
                         Entrar
                     </Button>
 
@@ -134,13 +150,17 @@ export default function Login() {
                         <Typography sx={styles.boxTypographyCreate} >
                             Não possui uma conta?
                         </Typography>
-                        <Button startIcon={<AddIcon />} sx={styles.boxButtonCreate} disableRipple>
+                        <Button
+                            startIcon={<AddIcon />}
+                            sx={styles.boxButtonCreate}
+                            disableRipple
+                            onClick={(e) => handleClickCreate(e)}
+                        >
                             Criar
                         </Button>
                     </Box>
                 </Box>
             </Box>
         </Box>
-
     );
 }
