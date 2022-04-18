@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -12,8 +13,10 @@ import { Context } from '../../contexts';
 export default function Usuario() {
     const {
         setOpenModalUsuario,
-      } = useContext(Context);
-      
+    } = useContext(Context);
+
+    const navigate = useNavigate();
+
     const styles = {
         txtField: {
             width: '700px',
@@ -94,11 +97,12 @@ export default function Usuario() {
                 backgroundColor: '#9c0036',
             }
         },
-        boxButtonRegister: {
-            width: '700px',
+        boxButtonInfo: {
+            width: '338px',
             height: '40px',
             mt: '40px',
             mb: '20px',
+            mr: '12px',
             backgroundColor: '#ff7300',
             borderRadius: '10px',
             color: 'white',
@@ -106,17 +110,33 @@ export default function Usuario() {
                 backgroundColor: '#de6021',
             }
         },
+        boxButtonLogout: {
+            width: '338px',
+            height: '40px',
+            mt: '40px',
+            mb: '20px',
+            ml: '12px',
+            backgroundColor: '#b80000',
+            borderRadius: '10px',
+            color: 'white',
+            '&:hover': {
+                backgroundColor: '#960000',
+            }
+        },
         box: {
             pt: '24px',
         },
-    }
+    };
+
+    const handleClick = (e) => {
+        navigate(`/`);
+    };
 
     return (
         <Box sx={styles.boxPage}>
             <Sidebar />
             <ModalUsuario />
             <Box sx={styles.container}>
-
                 <Box sx={styles.box}>
                     <TextField
                         required
@@ -128,7 +148,6 @@ export default function Usuario() {
                         disabled
                     />
                 </Box>
-
                 <Box sx={styles.box}>
                     <TextField
                         required
@@ -138,9 +157,7 @@ export default function Usuario() {
                         disableRipple
                         sx={styles.txtField}
                     />
-
                 </Box>
-
                 <Box sx={styles.box}>
                     <TextField
                         required
@@ -150,9 +167,7 @@ export default function Usuario() {
                         disableRipple
                         sx={styles.txtField}
                     />
-
                 </Box>
-
                 <Box sx={styles.box}>
                     <TextField
                         required
@@ -163,7 +178,6 @@ export default function Usuario() {
                         sx={styles.txtField}
                     />
                 </Box>
-
                 <Box sx={styles.box}>
                     <TextField
                         required
@@ -175,7 +189,6 @@ export default function Usuario() {
                         InputProps={{
                             endAdornment: <InputAdornment position="end">cm</InputAdornment>,
                         }}
-
                     />
                     <TextField
                         required
@@ -189,8 +202,6 @@ export default function Usuario() {
                         }}
                     />
                 </Box>
-
-
                 <Box sx={styles.box}>
                     <TextField
                         required
@@ -199,18 +210,20 @@ export default function Usuario() {
                         label="IMC"
                         disableRipple
                         sx={styles.txtField2}
-
                     />
                     <Button disableRipple sx={styles.buttonInfo} onClick={() => setOpenModalUsuario(true)}>
                         Vizualizar Informacoes
-                    </Button> 
+                    </Button>
                 </Box>
-
-                <Button fullWidth disableRipple sx={styles.boxButtonRegister}>
-                    Alterar Informacoes
-                </Button>
-
+                <Box>
+                    <Button disableRipple sx={styles.boxButtonInfo}>
+                        Alterar Informacoes
+                    </Button>
+                    <Button disableRipple sx={styles.boxButtonLogout} onClick={(e) => handleClick(e)}>
+                        Sair
+                    </Button>
             </Box>
         </Box>
+        </Box >
     )
 }

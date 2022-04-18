@@ -101,6 +101,53 @@ export default function CreateUser() {
         backgroundColor: '#de6021',
       }
     },
+    box: {
+      display: 'flex',
+      backgroundColor: 'white',
+      position: 'absolute',
+      width: '80%',
+      height: '80%',
+      borderRadius: '20px',
+    },
+    container: {
+      display: 'flex',
+      flexDirection: 'row',
+      flex: 1,
+      m: '36px',
+    },
+    right: {
+      display: 'flex',
+      flexDirection: 'column',
+      width: '35%',
+      height: '100%',
+    },
+    boxText: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
+      mr: '36px',
+    },
+    text: {
+      color: '#ff7300',
+      fontSize: '20px',
+      textAlign: 'center',
+    },
+    boxForm: {
+      display: 'flex',
+      flex: 1,
+      height: '100%',
+      flexDirection: 'column',
+      pl: '36px',
+      justifyContent: 'center',
+      borderLeft: '2px solid #ff7300',
+    },
+    boxTxtRow: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
   };
 
   const handleClick = (e) => {
@@ -109,35 +156,21 @@ export default function CreateUser() {
 
   return (
     <Box sx={styles.boxPrincipal}>
-      <Box sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: 'white',
-        position: 'absolute',
-        width: '80%',
-        height: '80%',
-        borderRadius: '20px',
-      }}>
-        <Box sx={{
-          display: 'flex', flexDirection: 'row', flex: 1, m: '36px',
-        }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', width: '35%', height: '100%',}}>
+      <Box sx={styles.box}>
+        <Box sx={styles.container}>
+          <Box sx={styles.right}>
             <Box sx={styles.boxIconButton}>
               <IconButton disableRipple onClick={(e) => handleClick(e)}>
                 <ArrowBackIosIcon sx={styles.icon} />
               </IconButton>
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', flex: 1, mr: '36px' }}>
-              <Typography sx={{ color: '#ff7300', fontSize: '20px', textAlign: 'center' }}>
+            <Box sx={styles.boxText}>
+              <Typography sx={styles.text}>
                 Por favor, insira seus dados para que possamos cadastrá-los em nossa plataforma.
               </Typography>
             </Box>
           </Box>
-          <Box sx={{
-            display: 'flex', flex: 1, height: '100%', flexDirection: 'column', pl: '36px',
-            justifyContent: 'center',
-            borderLeft: '2px solid #ff7300'
-          }}>
+          <Box sx={styles.boxForm}>
             <TextField
               required
               fullWidth
@@ -173,7 +206,7 @@ export default function CreateUser() {
                 endAdornment: <InputAdornment position="end">anos</InputAdornment>,
               }}
             />
-            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Box sx={styles.boxTxtRow}>
               <TextField
                 required
                 variant="outlined"

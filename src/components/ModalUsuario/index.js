@@ -123,6 +123,11 @@ export default function ModalUsuario() {
                 backgroundColor: '#de6021',
             }
         },
+        boxRow: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+        }
     };
 
     return (
@@ -147,7 +152,7 @@ export default function ModalUsuario() {
                         disableRipple
                         sx={styles.txtField}
                     />
-                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <Box sx={styles.boxRow}>
                         <TextField
                             required
                             variant="outlined"

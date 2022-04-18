@@ -81,6 +81,39 @@ export default function Login() {
                 },
             },
         },
+        container: {
+            width: '100%',
+            height: '100%'
+        },
+        boxForm: {
+            p: '24px',
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            height: '100%',
+            justifyContent: 'center'
+        },
+        boxTitle: {
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            mb: '50px',
+        },
+        title: {
+            color: '#ff7300',
+            fontWeight: 'bold',
+            fontSize: '60px',
+            mt: '20px',
+        },
+        subTitle: {
+            color: '#ffd000',
+            fontSize: '20px',
+            mt: '20px',
+        },
+        checkbox: {
+            color: '#ffd000 !important',
+        },
     };
 
     const handleClickCreate = (e) => {
@@ -97,22 +130,11 @@ export default function Login() {
                 src={alimentos}
                 sx={styles.avatarAberto}
             />
-            <Box sx={{ width: '100%', height: '100%' }}>
-                <Box
-                    sx={{
-                        p: '24px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        width: '100%',
-                        height: '100%',
-                        justifyContent: 'center'
-                    }}
-                >
-                    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', mb: '50px' }}>
-                        <Typography sx={{ color: '#ff7300', fontWeight: 'bold', fontSize: '60px', mt: '20px' }}>
-                            Fit Calories
-                        </Typography>
-                        <Typography sx={{ color: '#ffd000', fontSize: '20px', mt: '20px' }}>
+            <Box sx={styles.container}>
+                <Box sx={styles.boxForm}>
+                    <Box sx={styles.boxTitle}>
+                        <Typography sx={styles.title}>Fit Calories</Typography>
+                        <Typography sx={styles.subTitle}>
                             Olá! Insira suas credenciais para continuar
                         </Typography>
                     </Box>
@@ -134,7 +156,7 @@ export default function Login() {
                         sx={styles.txtField}
                     />
                     <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
+                        control={<Checkbox value="remember" sx={styles.checkbox} disableRipple />}
                         label="Lembrar minhas credenciais"
                     />
                     <Button
@@ -147,7 +169,7 @@ export default function Login() {
                     </Button>
 
                     <Box sx={styles.boxCreate}>
-                        <Typography sx={styles.boxTypographyCreate} >
+                        <Typography sx={styles.boxTypographyCreate}>
                             Não possui uma conta?
                         </Typography>
                         <Button
