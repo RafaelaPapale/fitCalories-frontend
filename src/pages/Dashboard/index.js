@@ -42,11 +42,11 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData('Arroz', 159, '1 colher',Date(Date.now()).toString(), ''),
+  createData('Feijão', 237, '1 concha', Date(Date.now()).toString(), ''),
+  createData('Ovo', 262, '1 unidade', Date(Date.now()).toString(), ''),
+  createData('Maçã', 305, '1 unidade', Date(Date.now()).toString(), ''),
+  createData('Danone', 356, '1 unidade', Date(Date.now()).toString(), ''),
 ];
 
 export default function Dashboard() {
@@ -171,11 +171,11 @@ export default function Dashboard() {
             <Table sx={styles.table} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell align="center">Dessert (100g serving)</StyledTableCell>
-                  <StyledTableCell align="center">Calories</StyledTableCell>
-                  <StyledTableCell align="center">Fat(g)</StyledTableCell>
-                  <StyledTableCell align="center">Carbs(g)</StyledTableCell>
-                  <StyledTableCell align="center">Protein(g)</StyledTableCell>
+                  <StyledTableCell align="center">Alimento</StyledTableCell>
+                  <StyledTableCell align="center">Qtd. Calorias</StyledTableCell>
+                  <StyledTableCell align="center">Qtd. Consumida</StyledTableCell>
+                  <StyledTableCell align="center">Data</StyledTableCell>
+                  <StyledTableCell align="center">#</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
