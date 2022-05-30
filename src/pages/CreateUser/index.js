@@ -1,4 +1,10 @@
 import { useNavigate } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import { toast } from 'react-toastify';
+
+import { Context } from '../../contexts';
+
+import UserClient from '../../resources/user';
 
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -10,6 +16,19 @@ import alimentos from '../../assets/images/alimentos.png';
 
 export default function CreateUser() {
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState('');
+  const [nome, setNome] = useState('');
+  const [senha, setSenha] = useState('');
+  const [peso, setPeso] = useState('');
+  const [altura, setAltura] = useState('');
+  const [idade, setIdade] = useState('');
+
+  const {
+    setUser,
+    setLoadingAuth,
+    storageUser,
+  } = useContext(Context);
 
   const styles = {
     boxPrincipal: {
@@ -150,8 +169,45 @@ export default function CreateUser() {
     },
   };
 
-  const handleClick = (e) => {
-    navigate(`/`);
+  const handleClick = async (e) => {
+    e.preventDefault();
+    if (nome !== '' && email !== '' && senha !== '' && idade !== '' && altura !== '' && peso !== '') {
+      setLoadingAuth(true);
+
+      const data = {
+        nome,
+        email,
+        senha,
+        peso: parseInt(peso, 10),
+        altura: parseInt(altura, 10),
+        idade: parseInt(idade, 10)
+      }
+
+      const create = await UserClient.createUser(data);
+      //console.log(create);
+      if (create.status === 200) {
+        let result = {
+          id: create.data.id,
+          nome: create.data.nome,
+          email: create.data.email,
+          idade: create.data.idade,
+          peso: create.data.peso,
+          altura: create.data.altura,
+          imc: create.data.imc,
+        }
+
+        setUser(result);
+        setLoadingAuth(false);
+
+        toast.success('Usuário criado com sucesso!');
+        navigate('/');
+      } else {
+        toast.error('Ops algo deu errado!');
+        setLoadingAuth(false);
+      }
+    } else {
+      toast.info('Preencha todos os campos para prosseguir!');
+    }
   }
 
   return (
@@ -172,30 +228,41 @@ export default function CreateUser() {
           </Box>
           <Box sx={styles.boxForm}>
             <TextField
+              id="email"
               required
               fullWidth
               variant="outlined"
               label="E-mail"
               disableRipple
               sx={styles.txtField}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
+              id="nome"
               required
               fullWidth
               variant="outlined"
               label="Nome"
               disableRipple
               sx={styles.txtField}
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
             />
             <TextField
+              id="senha"
               required
               fullWidth
               variant="outlined"
               label="Senha"
               disableRipple
               sx={styles.txtField}
+              type="password"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
             />
             <TextField
+              id="idade"
               required
               fullWidth
               variant="outlined"
@@ -205,10 +272,13 @@ export default function CreateUser() {
               InputProps={{
                 endAdornment: <InputAdornment position="end">anos</InputAdornment>,
               }}
+              value={idade}
+              onChange={(e) => setIdade(e.target.value)}
             />
             <Box sx={styles.boxTxtRow}>
               <TextField
                 required
+                id="peso"
                 variant="outlined"
                 label="Peso"
                 disableRipple
@@ -216,19 +286,29 @@ export default function CreateUser() {
                 InputProps={{
                   endAdornment: <InputAdornment position="end">kg</InputAdornment>,
                 }}
+                value={peso}
+                onChange={(e) => setPeso(e.target.value)}
               />
               <TextField
                 required
                 variant="outlined"
+                id="altura"
                 label="Altura"
                 disableRipple
                 sx={styles.txtFieldAltura}
                 InputProps={{
                   endAdornment: <InputAdornment position="end">metros</InputAdornment>,
                 }}
+                value={altura}
+                onChange={(e) => setAltura(e.target.value)}
               />
             </Box>
-            <Button fullWidth disableRipple sx={styles.boxButtonNew}>
+            <Button
+              fullWidth
+              disableRipple
+              sx={styles.boxButtonNew}
+              id="botão-cadastrar"
+              onClick={handleClick}>
               Cadastrar
             </Button>
           </Box>

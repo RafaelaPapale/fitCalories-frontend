@@ -5,6 +5,18 @@ export const Context = createContext({});
 function ContextProvider({ children }) {
   const [openModalCreate, setOpenModalCreate] = useState(false);
   const [openModalUsuario, setOpenModalUsuario] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loadingAuth, setLoadingAuth] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  function storageUser(data) {
+    localStorage.setItem('SistemUser', JSON.stringify(data));
+  }
+
+  async function signOut() {
+    localStorage.removeItem('SistemUser');
+    setUser(null);
+  }
 
   return (
     <Context.Provider
@@ -13,6 +25,14 @@ function ContextProvider({ children }) {
         setOpenModalCreate,
         openModalUsuario,
         setOpenModalUsuario,
+        user,
+        loading,
+        signOut,
+        loadingAuth,
+        setLoadingAuth,
+        setUser,
+        setLoading,
+        storageUser,
       }}
     >
       {children}
