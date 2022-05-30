@@ -27,7 +27,6 @@ export default function CreateUser() {
   const {
     setUser,
     setLoadingAuth,
-    storageUser,
   } = useContext(Context);
 
   const styles = {
