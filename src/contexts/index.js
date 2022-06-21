@@ -8,6 +8,7 @@ function ContextProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loadingAuth, setLoadingAuth] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [listFood, setListFood] = useState([]);
 
   function storageUser(data) {
     localStorage.setItem('SistemUser', JSON.stringify(data));
@@ -33,6 +34,8 @@ function ContextProvider({ children }) {
         setUser,
         setLoading,
         storageUser,
+        listFood,
+        setListFood,
       }}
     >
       {children}

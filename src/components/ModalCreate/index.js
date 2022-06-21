@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import { Button, Modal } from '@mui/material';
@@ -7,12 +7,19 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { TextField } from '@mui/material';
 
 import { Context } from '../../contexts';
+import FoodClient from '../../resources/alimentos';
+import { toast } from 'react-toastify';
 
 export default function ModalCreate() {
   const {
     openModalCreate,
     setOpenModalCreate,
+    setListFood,
   } = useContext(Context);
+
+  const [nome, setNome] = useState('');
+  const [caloria, setCaloria] = useState('');
+  const [quantidade, setQuantidade] = useState('');
 
   const styles = {
     boxModal: {
@@ -68,6 +75,37 @@ export default function ModalCreate() {
     },
   };
 
+  const handleClick = async () => {
+    const usuario = JSON.parse(localStorage.getItem('SistemUser'));
+
+    const date = new Date();
+    const dia = date.getDate().toString().padStart(2, '0');
+    const mes = (date.getMonth() + 1).toString().padStart(2, '0');
+    const ano = date.getFullYear();
+
+    const data = {
+      userId: usuario.id,
+      data: `${dia}/${mes}/${ano}`,
+      quantidade: parseInt(quantidade, 10),
+      caloria: parseInt(caloria, 10),
+      nome,
+    };
+
+    const response = await FoodClient.createFood(data);
+
+    if(response.status === 200) {
+      toast.success("Alimento cadastrado com sucesso");
+      const result = await FoodClient.listFood({ userId: usuario.id });
+      if(result.status === 200) setListFood(result.data);
+    } else {
+      toast.error("Erro ao cadastrar alimento!");
+    }
+
+    setNome('');
+    setQuantidade('');
+    setCaloria('');
+  };
+
   return (
     <Modal
       open={openModalCreate}
@@ -89,6 +127,8 @@ export default function ModalCreate() {
             label="Nome"
             disableRipple
             sx={styles.txtField}
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
           />
           <TextField
             required
@@ -97,6 +137,8 @@ export default function ModalCreate() {
             label="Quantidade de calorias"
             disableRipple
             sx={styles.txtField}
+            value={caloria}
+            onChange={(e) => setCaloria(e.target.value)}
           />
           <TextField
             required
@@ -105,9 +147,11 @@ export default function ModalCreate() {
             label="Quantidade consumida"
             disableRipple
             sx={styles.txtField}
+            value={quantidade}
+            onChange={(e) => setQuantidade(e.target.value)}
           />
           <Box sx={styles.boxButton}>
-            <Button disableRipple disabledRipple sx={styles.buttonNew}>
+            <Button disableRipple disabledRipple sx={styles.buttonNew} onClick={handleClick}>
               Cadastrar consumo
             </Button>
           </Box>

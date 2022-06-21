@@ -1,6 +1,6 @@
 import client from './config';
 
-const foodRoute = '/calorias';
+const foodRoute = '/food';
 
 const FoodClient = {
   async createFood(data) {
@@ -38,7 +38,7 @@ const FoodClient = {
 
   async deleteFood(data) {
     try {
-      const response = await client.delete(`${foodRoute}/delete`, data);
+      const response = await client.post(`${foodRoute}/delete`, data);
       return response;
     } catch (err) {
       const resp = {};

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -11,11 +11,15 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button } from '@mui/material';
+import { Button, List } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import Sidebar from '../../components/Sidebar';
 import ModalCreate from '../../components/ModalCreate';
 import { Context } from '../../contexts';
+import CaloriasClient from '../../resources/calorias';
+import { toast } from 'react-toastify';
+import FoodClient from '../../resources/alimentos';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,22 +41,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Arroz', 159, '1 colher',Date(Date.now()).toString(), ''),
-  createData('Feijão', 237, '1 concha', Date(Date.now()).toString(), ''),
-  createData('Ovo', 262, '1 unidade', Date(Date.now()).toString(), ''),
-  createData('Maçã', 305, '1 unidade', Date(Date.now()).toString(), ''),
-  createData('Danone', 356, '1 unidade', Date(Date.now()).toString(), ''),
-];
-
 export default function Dashboard() {
   const {
     setOpenModalCreate,
+    listFood,
+    setListFood,
   } = useContext(Context);
+
+  const [meta, setMeta] = useState('');
+  const [userId, setUserId] = useState('');
+  const [total, setTotal] = useState('');
 
   const styles = {
     txtField: {
@@ -131,7 +129,116 @@ export default function Dashboard() {
     table: {
       minWidth: 700,
     },
-  }
+  };
+
+  useEffect(() => {
+    async function loadStorage() {
+      const usuario = JSON.parse(localStorage.getItem('SistemUser'));
+      setUserId(usuario.id);
+
+      const date = new Date();
+      const dia = date.getDate().toString().padStart(2, '0');
+      const mes = (date.getMonth() + 1).toString().padStart(2, '0');
+      const ano = date.getFullYear();
+
+      const data = {
+        userId: usuario.id,
+        data: `${dia}/${mes}/${ano}`,
+      };
+
+      const response = await CaloriasClient.listCalorias(data);
+
+      if (response.status === 200) {
+        setMeta(response.data.totalDesejado);
+        setTotal(response.data.totalConsumido);
+      } else {
+        setMeta('');
+      }
+    }
+
+    loadStorage();
+  }, []);
+
+  useEffect(() => {
+    async function loadFood() {
+      const usuario = JSON.parse(localStorage.getItem('SistemUser'));
+      const result = await FoodClient.listFood({ userId: usuario.id });
+
+      if (result.status === 200) setListFood(result.data);
+    }
+
+    loadFood();
+  }, []);
+
+  useEffect(() => {
+    async function loadCalorias() {
+      const usuario = JSON.parse(localStorage.getItem('SistemUser'));
+      setUserId(usuario.id);
+
+
+      const date = new Date();
+      const dia = date.getDate().toString().padStart(2, '0');
+      const mes = (date.getMonth() + 1).toString().padStart(2, '0');
+      const ano = date.getFullYear();
+
+      const data = {
+        userId,
+        data: `${dia}/${mes}/${ano}`,
+      };
+      const result = await CaloriasClient.listCalorias(data);
+
+      if (result.status === 200) setTotal(result.data.totalConsumido);
+    }
+
+    loadCalorias();
+  }, [listFood]);
+
+
+  const handleClick = async () => {
+    const usuario = JSON.parse(localStorage.getItem('SistemUser'));
+    setUserId(usuario.id);
+
+
+    const date = new Date();
+    const dia = date.getDate().toString().padStart(2, '0');
+    const mes = (date.getMonth() + 1).toString().padStart(2, '0');
+    const ano = date.getFullYear();
+
+    const data = {
+      userId,
+      totalDesejado: parseInt(meta, 10),
+      data: `${dia}/${mes}/${ano}`,
+    };
+
+    const response = await CaloriasClient.createCalorias(data);
+
+    if (response.status === 200) {
+      setMeta(response.data.totalDesejado);
+      toast.success('Meta diária registrada com sucesso!')
+    } else {
+      setMeta('');
+      toast.error('Erro ao cadastrar meta diária!');
+    }
+  };
+
+  const handleDelete = async (e, row) => {
+    const usuario = JSON.parse(localStorage.getItem('SistemUser'));
+
+    const data = {
+      userId: usuario.id,
+      id: row.id,
+    };
+
+    const response = await FoodClient.deleteFood(data);
+    if (response.status === 200) {
+      toast.success('Alimento deletado com sucesso!');
+      const result = await FoodClient.listFood({ userId: usuario.id });
+
+      if (result.status === 200) setListFood(result.data);
+    } else {
+      toast.error('Erro ao deletar alimento!');
+    }
+  };
 
   return (
     <Box sx={styles.boxPage}>
@@ -148,8 +255,10 @@ export default function Dashboard() {
               InputProps={{
                 endAdornment: <InputAdornment position="end">calorias</InputAdornment>,
               }}
+              value={meta}
+              onChange={(e) => setMeta(e.target.value)}
             />
-            <Button disableRipple sx={styles.buttonAlterar}>Alterar</Button>
+            <Button disableRipple sx={styles.buttonAlterar} onClick={handleClick}>Alterar</Button>
           </Box>
           <Box>
             <TextField
@@ -160,11 +269,19 @@ export default function Dashboard() {
               InputProps={{
                 endAdornment: <InputAdornment position="end">calorias</InputAdornment>,
               }}
+              value={total}
             />
           </Box>
         </Box>
-        <Box sx={styles.boxButtonNew} onClick={() => setOpenModalCreate(true)}>
-          <Button disableRipple sx={styles.buttonNew}>Novo consumo</Button>
+        <Box sx={styles.boxButtonNew}>
+          <Button
+            disabled={meta === ''}
+            disableRipple
+            sx={styles.buttonNew}
+            onClick={() => setOpenModalCreate(true)}
+          >
+            Novo consumo
+          </Button>
         </Box>
         <Box sx={styles.boxTable}>
           <TableContainer component={Paper} sx={styles.tableContainer}>
@@ -179,22 +296,21 @@ export default function Dashboard() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => (
-                  <StyledTableRow key={row.name}>
-                    <StyledTableCell component="th" scope="row" align="center">
-                      {row.name}
+                {listFood.map((row) => (
+                  <StyledTableRow key={Math.random()}>
+                    <StyledTableCell align="center">{row.nome}</StyledTableCell>
+                    <StyledTableCell align="center">{row.caloria}</StyledTableCell>
+                    <StyledTableCell align="center">{row.quantidade}</StyledTableCell>
+                    <StyledTableCell align="center">{row.data}</StyledTableCell>
+                    <StyledTableCell align="center">
+                      <DeleteIcon onClick={(e) => handleDelete(e, row)} />
                     </StyledTableCell>
-                    <StyledTableCell align="center">{row.calories}</StyledTableCell>
-                    <StyledTableCell align="center">{row.fat}</StyledTableCell>
-                    <StyledTableCell align="center">{row.carbs}</StyledTableCell>
-                    <StyledTableCell align="center">{row.protein}</StyledTableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
         </Box>
-
       </Box>
     </Box>
   )

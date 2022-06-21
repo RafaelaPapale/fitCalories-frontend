@@ -4,7 +4,7 @@
 describe('Caso de Teste: Registrar novo usuário', () => {
 
   it('Caso de Teste: Registrar um usuario com sucesso!', () => {
-    cy.visit('http://localhost:4000/create');
+    cy.visit('http://localhost:5000/create');
     cy.get('#email').type(`renzo${Math.random()}@inatel.br`);
     cy.get('#nome').type("Renzo Paranaíba");
     cy.get('#senha').type("jumpofthecat");
@@ -16,7 +16,7 @@ describe('Caso de Teste: Registrar novo usuário', () => {
   });
 
   it('Caso de Teste: Erro ao criar usuário que não adiciona todas as informações', () => {
-    cy.visit('http://localhost:4000/create');
+    cy.visit('http://localhost:5000/create');
     cy.get('#email').type(`renzo${Math.random()}@inatel.br`);
     cy.get('#nome').type("Renzo Paranaíba");
     cy.get('#senha').type("jumpofthecat");
@@ -25,7 +25,7 @@ describe('Caso de Teste: Registrar novo usuário', () => {
   });
 
   it('Caso de Teste: Erro ao criar usuário', () => {
-    cy.visit('http://localhost:4000/create');
+    cy.visit('http://localhost:5000/create');
     cy.get('#email').type(`renzo${Math.random()}@inatel.br`);
     cy.get('#nome').type("Renzo Paranaíba");
     cy.get('#senha').type("jumpofthecat");

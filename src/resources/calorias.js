@@ -16,7 +16,7 @@ const CaloriasClient = {
 
   async listCalorias(data) {
     try {
-      const response = await client.get(`${caloriasRoute}/list`, data);
+      const response = await client.patch(`${caloriasRoute}/list`, data);
       return response;
     } catch (err) {
       const resp = {};

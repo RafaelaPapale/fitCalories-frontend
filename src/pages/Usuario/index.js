@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -9,12 +10,14 @@ import { Button } from '@mui/material';
 
 import Sidebar from '../../components/Sidebar';
 import ModalUsuario from '../../components/ModalUsuario';
+import UserClient from '../../resources/user';
 import { Context } from '../../contexts';
 
 export default function Usuario() {
   const {
     setOpenModalUsuario,
     user,
+    setUser,
   } = useContext(Context);
 
   const [nome, setNome] = useState('');
@@ -32,11 +35,10 @@ export default function Usuario() {
 
     setNome(usuario.nome);
     setEmail(usuario.email);
-    setSenha(usuario.senha);
     setAltura(usuario.altura);
     setPeso(usuario.peso);
     setIdade(usuario.idade);
-    setImc(usuario.imc);
+    setImc(usuario.imc.toFixed(2));
   }, []);
 
   const styles = {
@@ -151,7 +153,60 @@ export default function Usuario() {
   };
 
   const handleClick = (e) => {
+    localStorage.removeItem('SistemUser');
+    setUser(null);
     navigate(`/`);
+  };
+
+  const handleUpdateUser = async (e) => {
+    if (nome !== '' && senha !== '' && idade !== '' && peso !== '' && altura !== '') {
+      const data = {
+        nome,
+        email,
+        senha,
+        peso: parseInt(peso, 10),
+        altura: parseFloat(`${altura}`),
+        idade: parseInt(idade, 10)
+      };
+
+      const response = await UserClient.updateUser(data);
+      if (response.status === 200) {
+        let result = {
+          id: response.data.id,
+          nome: response.data.nome,
+          email: response.data.email,
+          idade: response.data.idade,
+          peso: response.data.peso,
+          altura: response.data.altura,
+          imc: response.data.imc,
+        }
+
+        setUser(result);
+
+        setNome(result.nome);
+        setEmail(result.email);
+        setAltura(result.altura);
+        setPeso(result.peso);
+        setIdade(result.idade);
+        setImc(result.imc.toFixed(2));
+        setSenha('');
+
+        toast.success('Usuário atualizado com sucesso!');
+      } else {
+        toast.error('Erro ao atualizar usuário!');
+
+        const usuario = JSON.parse(localStorage.getItem('SistemUser'));
+
+        setNome(usuario.nome);
+        setEmail(usuario.email);
+        setAltura(usuario.altura);
+        setPeso(usuario.peso);
+        setIdade(usuario.idade);
+        setImc(usuario.imc.toFixed(2));
+      }
+    } else {
+      toast.info('Preencha todos os campos para prosseguir!');
+    }
   };
 
   return (
@@ -251,7 +306,7 @@ export default function Usuario() {
           </Button>
         </Box>
         <Box>
-          <Button disableRipple sx={styles.boxButtonInfo}>
+          <Button disableRipple sx={styles.boxButtonInfo} onClick={(e) => handleUpdateUser(e)}>
             Alterar informações
           </Button>
           <Button disableRipple sx={styles.boxButtonLogout} onClick={(e) => handleClick(e)}>

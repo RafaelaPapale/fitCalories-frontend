@@ -178,7 +178,7 @@ export default function CreateUser() {
         email,
         senha,
         peso: parseInt(peso, 10),
-        altura: parseInt(altura, 10),
+        altura: parseFloat(`${altura}`),
         idade: parseInt(idade, 10)
       }
 
